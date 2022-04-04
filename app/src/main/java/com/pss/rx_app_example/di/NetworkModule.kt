@@ -1,6 +1,6 @@
-package com.pss.quick_setup.di
+package com.pss.rx_app_example.di
 
-import com.pss.quick_setup.widget.utils.Utils.BASE_URL
+import com.pss.rx_app_example.widget.utils.Utils.BASE_URL
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

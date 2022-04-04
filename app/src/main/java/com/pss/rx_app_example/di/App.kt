@@ -1,4 +1,4 @@
-package com.pss.quick_setup.di
+package com.pss.rx_app_example.di
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp

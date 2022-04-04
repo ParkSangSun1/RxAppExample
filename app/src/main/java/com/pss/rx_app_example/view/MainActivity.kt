@@ -1,12 +1,10 @@
-package com.pss.quick_setup.view
+package com.pss.rx_app_example.view
 
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
 import androidx.activity.viewModels
 import com.pss.quick_setup.R
-import com.pss.quick_setup.base.BaseActivity
 import com.pss.quick_setup.databinding.ActivityMainBinding
-import com.pss.quick_setup.viewmodel.MainViewModel
+import com.pss.rx_app_example.base.BaseActivity
+import com.pss.rx_app_example.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -17,4 +15,5 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     override fun init() {
 
     }
+
 }

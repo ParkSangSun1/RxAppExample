@@ -1,4 +1,4 @@
-package com.pss.quick_setup.base
+package com.pss.rx_app_example.base
 
 import android.os.Bundle
 import android.widget.Toast

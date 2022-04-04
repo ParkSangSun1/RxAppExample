@@ -1,10 +1,8 @@
-package com.pss.quick_setup.di
+package com.pss.rx_app_example.di
 
 import dagger.Module
-import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)

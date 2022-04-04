@@ -1,7 +1,7 @@
-package com.pss.quick_setup.viewmodel
+package com.pss.rx_app_example.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.pss.quick_setup.repository.MainRepository
+import com.pss.rx_app_example.repository.MainRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

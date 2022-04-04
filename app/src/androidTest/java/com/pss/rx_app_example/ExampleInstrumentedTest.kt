@@ -1,4 +1,4 @@
-package com.pss.quick_setup
+package com.pss.rx_app_example
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

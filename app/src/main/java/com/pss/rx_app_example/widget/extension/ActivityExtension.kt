@@ -1,10 +1,7 @@
-package com.pss.quick_setup.widget.extension
+package com.pss.rx_app_example.widget.extension
 
 import android.content.Context
 import android.content.Intent
-import android.view.View
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
