@@ -10,4 +10,5 @@ class MainViewModel @Inject constructor(
     val mainRepository: MainRepository
 ) : ViewModel() {
 
+    fun getPapagoTranslationText(text : String) = mainRepository.getPapagoTranslationText(text = text)
 }
