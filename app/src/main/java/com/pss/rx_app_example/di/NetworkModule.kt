@@ -1,5 +1,6 @@
 package com.pss.rx_app_example.di
 
+import com.pss.rx_app_example.data.remote.api.PapagoApi
 import com.pss.rx_app_example.widget.utils.Utils.BASE_URL
 import dagger.Module
 import dagger.Provides
@@ -8,6 +9,7 @@ import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
+import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
@@ -38,6 +40,7 @@ object NetworkModule {
             .client(okHttpClient)
             .client(provideHttpClient())
             .addConverterFactory(gsonConverterFactory)
+            .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
             .build()
     }
 
@@ -51,9 +54,9 @@ object NetworkModule {
     private fun getLoggingInterceptor(): HttpLoggingInterceptor =
         HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY }
 
-/*    @Provides
+    @Provides
     @Singleton
-    fun provideSampleApiService(retrofit: Retrofit): SampleApi {
-        return retrofit.create(SampleApi::class.java)
-    }*/
+    fun providePapagoTranslationService(retrofit: Retrofit): PapagoApi {
+        return retrofit.create(PapagoApi::class.java)
+    }
 }

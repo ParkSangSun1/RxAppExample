@@ -7,7 +7,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    val mainRepository: MainRepository
+    private val mainRepository: MainRepository
 ) : ViewModel() {
 
     fun getPapagoTranslationText(text : String) = mainRepository.getPapagoTranslationText(text = text)
