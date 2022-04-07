@@ -8,6 +8,7 @@ import com.pss.rx_app_example.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.ObservableOnSubscribe
 import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 
@@ -34,20 +35,22 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({ response ->
+                        binding.translationAfterText.text = response.message.result.translatedText
 
-                        translationAfterTextObservable =
+                      /*  translationAfterTextObservable =
                             createTranslationObservable(response.message.result.translatedText)
                                 .subscribeOn(Schedulers.io())
                                 .observeOn(AndroidSchedulers.mainThread())
                                 .subscribe({ text ->
 
                                     binding.translationAfterText.text = text
+                                    translationAfterTextObservable.dispose()
 
                                 }, {
 
                                     binding.translationAfterText.text = "오류가 발생했습니다"
 
-                                })
+                                })*/
 
                     }, { error ->
 
