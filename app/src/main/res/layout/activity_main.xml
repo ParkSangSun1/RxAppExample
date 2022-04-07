@@ -142,6 +142,7 @@
 
 
             <TextView
+                android:id="@+id/translation_after_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="번역문이 표시됩니다"

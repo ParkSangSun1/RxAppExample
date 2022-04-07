@@ -1,12 +1,6 @@
 package com.pss.rx_app_example.view
 
-import android.Manifest
-import android.content.pm.PackageManager
-import android.os.Build
-import android.util.Log
 import androidx.activity.viewModels
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import com.pss.rx_app_example.R
 import com.pss.rx_app_example.base.BaseActivity
 import com.pss.rx_app_example.databinding.ActivityMainBinding
@@ -14,19 +8,24 @@ import com.pss.rx_app_example.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.core.Scheduler
-import io.reactivex.rxjava3.functions.Consumer
+import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 
 @AndroidEntryPoint
 class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     private val mainViewModel by viewModels<MainViewModel>()
+    lateinit var translationAfterTextObservable: Disposable
+    lateinit var translationTextObservable: Observable<String>
 
 
     override fun init() {
-        val searchTextObservable = createButtonClickObservable()
+        observableSubscribe()
+    }
 
-        searchTextObservable
+    private fun observableSubscribe() {
+        translationTextObservable = createButtonClickObservable()
+
+        translationTextObservable
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ query ->
@@ -34,14 +33,31 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
                 mainViewModel.getPapagoTranslationText(text = query)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({
+                    .subscribe({ response ->
 
-                        shortShowToast(it.message.result.translatedText)
+                        translationAfterTextObservable =
+                            createTranslationObservable(response.message.result.translatedText)
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe({ text ->
+
+                                    binding.translationAfterText.text = text
+
+                                }, {
+
+                                    binding.translationAfterText.text = "오류가 발생했습니다"
+
+                                })
+
                     }, { error ->
+
                         shortShowToast(error.toString())
+
                     })
             }, { error ->
+
                 shortShowToast(error.toString())
+
             })
     }
 
@@ -60,4 +76,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         }
     }
 
+    private fun createTranslationObservable(text: String): Observable<String> {
+        return Observable.create { emitter ->
+            emitter.onNext(text)
+        }
+    }
 }
