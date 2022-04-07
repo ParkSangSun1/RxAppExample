@@ -15,7 +15,6 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 @AndroidEntryPoint
 class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     private val mainViewModel by viewModels<MainViewModel>()
-    lateinit var translationAfterTextObservable: Disposable
     lateinit var translationTextObservable: Observable<String>
 
 
@@ -35,22 +34,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({ response ->
+
                         binding.translationAfterText.text = response.message.result.translatedText
-
-                      /*  translationAfterTextObservable =
-                            createTranslationObservable(response.message.result.translatedText)
-                                .subscribeOn(Schedulers.io())
-                                .observeOn(AndroidSchedulers.mainThread())
-                                .subscribe({ text ->
-
-                                    binding.translationAfterText.text = text
-                                    translationAfterTextObservable.dispose()
-
-                                }, {
-
-                                    binding.translationAfterText.text = "오류가 발생했습니다"
-
-                                })*/
 
                     }, { error ->
 

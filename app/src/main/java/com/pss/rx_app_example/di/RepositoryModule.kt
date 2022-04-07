@@ -11,9 +11,9 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 class RepositoryModule {
 
-    @Provides
+/*    @Provides
     @Singleton
     fun provideMainRepository(
 
-    ) = MainRepository()
+    ) = MainRepository()*/
 }
