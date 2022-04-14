@@ -24,6 +24,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         translationButtonClickEvent()
     }
 
+    //번역하기 버튼 클릭 시
     private fun translationButtonClickEvent() {
 
         val translationClickObservable = Observable.create<TranslationDataDelivery> { emitter ->
@@ -58,6 +59,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
 
     }
 
+    //번역 언어 변경 클릭 시
     private fun changeTranslationLanguageClickEvent(){
        val changeTranslationLanguageClickObservable = binding.change.clicks()
            .subscribe {
