@@ -29,7 +29,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
 
         val translationClickObservable = Observable.create<TranslationDataDelivery> { emitter ->
             binding.translationBtn.setOnClickListener {
-                emitter.onNext(TranslationDataDelivery(binding.searchEditTxt.text.toString(), mainViewModel.language))
+                emitter.onNext(TranslationDataDelivery(binding.translationEditTxt.text.toString(), mainViewModel.language))
             }
 
             emitter.setCancellable {
