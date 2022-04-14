@@ -54,24 +54,24 @@
                     android:textColor="@color/black"
                     android:textSize="20sp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/textView2"
+                    app:layout_constraintEnd_toStartOf="@+id/before_txt"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/textView2"
+                    android:id="@+id/before_txt"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/notosanskr_bold"
                     android:text="영어"
                     android:textColor="@color/gray"
                     android:textSize="15sp"
-                    app:layout_constraintBottom_toBottomOf="@+id/imageView2"
-                    app:layout_constraintEnd_toStartOf="@+id/imageView2"
-                    app:layout_constraintTop_toTopOf="@+id/imageView2" />
+                    app:layout_constraintBottom_toBottomOf="@+id/change"
+                    app:layout_constraintEnd_toStartOf="@+id/change"
+                    app:layout_constraintTop_toTopOf="@+id/change" />
 
                 <ImageView
-                    android:id="@+id/imageView2"
+                    android:id="@+id/change"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:padding="5dp"
@@ -113,12 +113,12 @@
                     android:textSize="20sp"
 
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/textView4"
+                    app:layout_constraintEnd_toStartOf="@+id/after_txt"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/textView4"
+                    android:id="@+id/after_txt"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/notosanskr_bold"
@@ -155,7 +155,7 @@
                 />
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/search_btn"
+                android:id="@+id/translation_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="번역하기"

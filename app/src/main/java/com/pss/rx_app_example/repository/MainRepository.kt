@@ -6,5 +6,5 @@ import javax.inject.Inject
 class MainRepository @Inject constructor(
     private val mainDataSource: MainDataSource
 ){
-    fun getPapagoTranslationText(text : String) = mainDataSource.getPapagoTranslationText(text = text)
+    fun getPapagoTranslationText(text : String, source : String, target : String) = mainDataSource.getPapagoTranslationText(text = text, source = source, target = target)
 }

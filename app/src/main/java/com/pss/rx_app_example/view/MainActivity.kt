@@ -1,72 +1,81 @@
 package com.pss.rx_app_example.view
 
 import androidx.activity.viewModels
+import com.jakewharton.rxbinding3.view.clicks
 import com.pss.rx_app_example.R
 import com.pss.rx_app_example.base.BaseActivity
+import com.pss.rx_app_example.data.remote.model.delivery.TranslationDataDelivery
 import com.pss.rx_app_example.databinding.ActivityMainBinding
 import com.pss.rx_app_example.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.core.ObservableOnSubscribe
-import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 
 @AndroidEntryPoint
 class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     private val mainViewModel by viewModels<MainViewModel>()
-    lateinit var translationTextObservable: Observable<String>
+    private val compositeDisposable = io.reactivex.disposables.CompositeDisposable()
+    private val compositeRx3Disposable = io.reactivex.rxjava3.disposables.CompositeDisposable()
 
 
     override fun init() {
-        observableSubscribe()
+        changeTranslationLanguageClickEvent()
+        translationButtonClickEvent()
     }
 
-    private fun observableSubscribe() {
-        translationTextObservable = createButtonClickObservable()
+    private fun translationButtonClickEvent() {
 
-        translationTextObservable
+        val translationClickObservable = Observable.create<TranslationDataDelivery> { emitter ->
+            binding.translationBtn.setOnClickListener {
+                emitter.onNext(TranslationDataDelivery(binding.searchEditTxt.text.toString(), mainViewModel.language))
+            }
+
+            emitter.setCancellable {
+                binding.translationBtn.setOnClickListener(null)
+            }
+        }
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ query ->
-
-                mainViewModel.getPapagoTranslationText(text = query)
+            .subscribe({ data ->
+                val source = if (data.languageState) "en" else "ko"
+                val target = if (data.languageState) "ko" else "en"
+                val papagoTranslationObservable = mainViewModel.getPapagoTranslationText(text = data.text, source = source, target = target)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({ response ->
-
                         binding.translationAfterText.text = response.message.result.translatedText
-
                     }, { error ->
-
                         shortShowToast(error.toString())
-
                     })
+                compositeRx3Disposable.add(papagoTranslationObservable)
             }, { error ->
 
                 shortShowToast(error.toString())
 
             })
+        compositeRx3Disposable.add(translationClickObservable)
+
     }
 
-    private fun createButtonClickObservable(): Observable<String> {
-
-        return Observable.create { emitter ->
-
-            binding.searchBtn.setOnClickListener {
-                emitter.onNext(binding.searchEditTxt.text.toString())
-            }
-
-            emitter.setCancellable {
-                binding.searchBtn.setOnClickListener(null)
-            }
-
-        }
+    private fun changeTranslationLanguageClickEvent(){
+       val changeTranslationLanguageClickObservable = binding.change.clicks()
+           .subscribe {
+               mainViewModel.language = !mainViewModel.language
+               if (mainViewModel.language){
+                   binding.beforeTxt.text = "영어"
+                   binding.afterTxt.text = "한국어"
+               }else{
+                   binding.beforeTxt.text = "한국어"
+                   binding.afterTxt.text = "영어"
+               }
+           }
+        compositeDisposable.add(changeTranslationLanguageClickObservable)
     }
 
-    private fun createTranslationObservable(text: String): Observable<String> {
-        return Observable.create { emitter ->
-            emitter.onNext(text)
-        }
+    override fun onDestroy() {
+        super.onDestroy()
+        compositeDisposable.dispose()
+        compositeRx3Disposable.dispose()
     }
 }
